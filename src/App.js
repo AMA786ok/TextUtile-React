@@ -1,14 +1,15 @@
-// import logo from './logo.svg';
+
 import "./App.css";
 import Navbar from "./Components/Navbar";
 import Alert from "./Components/Alert";
 import Text from "./Components/Text";
-
+import About from "./Components/About";
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 import React, { useState } from "react";
 function App() {
   const [mode, setMode] = useState("light");
-  const [blue, setBlue] = useState("light");
+  // const [blue, setBlue] = useState("light");
   const [alert, setAlert] = useState(null);
   const showAlert = (message, type) => {
     setAlert({
@@ -34,42 +35,36 @@ function App() {
     }
   };
 
-  const toggleMode1 = () => {
-    if (blue === "light") {
-      setBlue("blue");
-      document.body.style.backgroundColor = "#060a2e";
-      document.body.style.color = "white";
-      showAlert("Blueish Mode has been enable", "primary ");
-    } else {
-      setBlue("light");
-      document.body.style.backgroundColor = "white";
-      document.body.style.color = "black";
-      showAlert("Blueish Mode has been disable", "danger ");
-    }
-  };
-
   return (
     <>
-        <Alert alert={alert} />
+      <Router>
+       
         <Navbar
           title="Text-Sizing"
-          blue={blue}
           mode={mode}
-          toggleMode1={toggleMode1}
           toggleMode={toggleMode}
           alert="Hura! This Is Sale For Three Days"
         />
+         <Alert alert={alert} />
         <div className="container py-3">
+          <Switch>
+            <Route exact path="/">
               <Text
                 showAlert={showAlert}
-                heading="Enter Text And Enalize it "
+                heading="Try TextSize - word counter , Charcter Counter "
                 mode={mode}
-                blue={blue}
                 submit="Change text Upper case"
               />
+            </Route>
+            <Route exact path="/about">
+              <About mode={mode}/>
+            </Route>
+          </Switch>
         </div>
+      </Router>
     </>
   );
 }
 
 export default App;
+
